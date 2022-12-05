@@ -6,6 +6,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Get and display all the ramen images
     getRamenDetails()
+
+    // Add an event listener for submitting the form
+    const form = document.getElementById('new-ramen');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        createNewRamen(event)
+        form.reset();
+    })
 })
 
 function getRamenDetails(){
@@ -43,4 +51,26 @@ function displayRamenDetails(ramen){
 
     // Change the comment
     document.querySelector('#comment-display').textContent = ramen.comment;
+}
+
+function createNewRamen(event){
+    // Get each input and assign it to a variable
+    const newRamenName = event.target[0].value;
+    const newRamenRest = event.target[1].value;
+    const newRamenImg = event.target[2].value;
+    const newRamenRating = event.target[3].value;
+    const newRamenComment = event.target[4].value;
+
+    // Put the inputs into an object
+    const newRamen ={
+        name: newRamenName,
+        restaurant: newRamenRest,
+        image: newRamenImg,
+        rating: newRamenRating,
+        comment: newRamenComment
+    }
+
+    // Display the new ramen in the Menu and Details (non-persistent)
+    displayRamenMenu(newRamen)
+    displayRamenDetails(newRamen)
 }

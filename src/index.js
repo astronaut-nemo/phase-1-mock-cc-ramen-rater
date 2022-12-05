@@ -9,18 +9,38 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function getRamenDetails(){
-    fetch('http://localhost:3000/ramens').then((response) => response.json()).then((data) => data.forEach(ramen => displayRamenDetails(ramen)))
+    fetch('http://localhost:3000/ramens').then((response) => response.json()).then((data) => data.forEach(ramen => displayRamenMenu(ramen)))
 }
 
-function displayRamenDetails(ramen){
+function displayRamenMenu(ramen){
     // Get the ramen menu <div> element
     const ramenMenu = document.getElementById('ramen-menu');
+
     // Create an <img> element
     const ramenImg = document.createElement('img');
     // Set the src attribute to the ramen's image URL
     ramenImg.setAttribute('src', ramen.image);
     // Give images an id based on their server id (makes it easier to access their details later)
     ramenImg.setAttribute('id', ramen.id);
+
+    // Add event listener for displaying the details
+    ramenImg.addEventListener('click', () => displayRamenDetails(ramen));
+
     // Append to the ramen menu
     ramenMenu.appendChild(ramenImg);
+}
+
+function displayRamenDetails(ramen){
+    // Change the image source to the ramen's image
+    document.querySelector('.detail-image').setAttribute('src', ramen.image);
+    // Change the ramen name
+    document.querySelector('.name').textContent = ramen.name;
+    // Change the restaurant name
+    document.querySelector('.restaurant').textContent = ramen.restaurant;
+
+    // Change the rating
+    document.querySelector('#rating-display').textContent = ramen.rating;
+
+    // Change the comment
+    document.querySelector('#comment-display').textContent = ramen.comment;
 }
